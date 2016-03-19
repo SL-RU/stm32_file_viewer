@@ -5,7 +5,7 @@
 #include "fonts.h"
 #include "ssd1306.h"
 
-#define GUI_DefFont Font_7x10
+#define GUI_DefFont Font_8x7
 
 /**
  * @brief  Initialize gui
