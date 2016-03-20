@@ -184,8 +184,10 @@ uint8_t gui_input_list(int8_t key);
 
 
 void gui_showMessage(char* text);
-uint8_t gui_draw_message();
-uint8_t gui_input_message();
+void gui_showCustomMessage(void (*drawmsg)(), uint8_t (*msginput)(uint8_t));
+void gui_closeMessage(void);
+uint8_t gui_draw_message(void);
+uint8_t gui_input_message(uint8_t key);
 
 
 void gui_input(int8_t key);

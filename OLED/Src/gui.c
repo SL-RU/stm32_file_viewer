@@ -1,8 +1,14 @@
 #include "gui.h"
 
+//current list element
 GUI_ListData *gui_CurList;
-char *GUI_MessageText;
 
+//global vars for message
+char *GUI_MessageText;
+void (*GUI_MessageDraw)();
+uint8_t (*GUI_MessageInput)(uint8_t);
+
+//current app 
 void (*GUI_curapp_draw)();
 uint8_t (*GUI_curapp_input)(uint8_t);
 
@@ -314,27 +320,52 @@ void gui_showMessage(char* text)
 	if(GUI_MessageText != 0)
 		free(GUI_MessageText);
 	GUI_MessageText = text;
+	GUI_MessageDraw = 0;
+	GUI_MessageInput = 0;
+}
+void gui_showCustomMessage(void (*drawmsg)(), uint8_t (*msginput)(uint8_t))
+{
+	GUI_MessageText = 0;
+	GUI_MessageDraw = drawmsg;
+	GUI_MessageInput = msginput;
+}
+void gui_closeMessage(void)
+{
+	GUI_MessageText = 0;
+	GUI_MessageDraw = 0;
+	GUI_MessageInput = 0;
 }
 uint8_t gui_draw_message()
 {
-	if(GUI_MessageText == 0)
+	if(GUI_MessageText == 0 && GUI_MessageInput == 0 && GUI_MessageDraw == 0)
 		return 0;
+	if(GUI_MessageDraw != 0)
+	{
+		GUI_MessageDraw();
+		return 1;
+	}
 	SSD1306_DrawRectangle(0, 0, 126, 64, 1);
 	gui_lable_multiline(GUI_MessageText, 2, 2, 122, 60, 0, 1);
 	return 1;
 }
-uint8_t gui_input_message()
+uint8_t gui_input_message(uint8_t key)
 {
-	if(GUI_MessageText == 0)
+	if(GUI_MessageText == 0 && GUI_MessageInput == 0 && GUI_MessageDraw == 0)
 		return 0;
-	//free(&GUI_MessageText);
-	GUI_MessageText = 0;
+	if(GUI_MessageInput != 0)
+	{
+		if(GUI_MessageInput(key))
+		{
+			return 1;
+		}
+	}
+	gui_closeMessage();
 	return 1;
 }
 
 void gui_input(int8_t key)
 {
-	if(gui_input_message())
+	if(gui_input_message(key))
 		return;
 	if(gui_input_list(key))
 		return;

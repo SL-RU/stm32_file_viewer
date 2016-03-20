@@ -27,23 +27,7 @@ Project File Date:  03/17/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'oled_sd_file_manager'
-compiling fonts.c...
-compiling gui.c...
-..\OLED\Inc\gui.h(187): warning:  #1295-D: Deprecated declaration gui_draw_message - give arg types
-  uint8_t gui_draw_message();
-..\OLED\Inc\gui.h(188): warning:  #1295-D: Deprecated declaration gui_input_message - give arg types
-  uint8_t gui_input_message();
-..\OLED\Src\gui.c(165): warning:  #940-D: missing return statement at end of non-void function "gui_create_listItem"
-  }
-..\OLED\Src\gui.c(241): warning:  #940-D: missing return statement at end of non-void function "gui_draw_list"
-  }
-..\OLED\Src\gui.c: 4 warnings, 0 errors
-compiling ssd1306.c...
 compiling fm.c...
-..\OLED\Inc\gui.h(187): warning:  #1295-D: Deprecated declaration gui_draw_message - give arg types
-  uint8_t gui_draw_message();
-..\OLED\Inc\gui.h(188): warning:  #1295-D: Deprecated declaration gui_input_message - give arg types
-  uint8_t gui_input_message();
 ../Inc/fm.h(5): warning:  #1295-D: Deprecated declaration fm_init - give arg types
   void fm_init();
 ../Inc/fm.h(7): warning:  #1295-D: Deprecated declaration fm_draw - give arg types
@@ -52,30 +36,14 @@ compiling fm.c...
   void create_files_list();
 ../Inc/fm.h(11): warning:  #1295-D: Deprecated declaration create_files_list - give arg types
   void create_files_list();
-..\Src\fm.c(41): warning:  #940-D: missing return statement at end of non-void function "fm_input"
+..\Src\fm.c(43): warning:  #940-D: missing return statement at end of non-void function "fm_input"
   }
-..\Src\fm.c(94): warning:  #550-D: variable "i" was set but never used
+..\Src\fm.c(132): warning:  #550-D: variable "i" was set but never used
     int i;
-..\Src\fm.c: 8 warnings, 0 errors
-compiling main.c...
-..\OLED\Inc\gui.h(187): warning:  #1295-D: Deprecated declaration gui_draw_message - give arg types
-  uint8_t gui_draw_message();
-..\OLED\Inc\gui.h(188): warning:  #1295-D: Deprecated declaration gui_input_message - give arg types
-  uint8_t gui_input_message();
-../Inc/fm.h(5): warning:  #1295-D: Deprecated declaration fm_init - give arg types
-  void fm_init();
-../Inc/fm.h(7): warning:  #1295-D: Deprecated declaration fm_draw - give arg types
-  void fm_draw();
-../Inc/fm.h(11): warning:  #1-D: last line of file ends without a newline
-  void create_files_list();
-../Inc/fm.h(11): warning:  #1295-D: Deprecated declaration create_files_list - give arg types
-  void create_files_list();
-../Src/main.c(188): warning:  #1-D: last line of file ends without a newline
-  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-../Src/main.c: 7 warnings, 0 errors
+..\Src\fm.c: 6 warnings, 0 errors
 linking...
-Program Size: Code=25654 RO-data=6442 RW-data=192 ZI-data=16184  
-"oled_sd_file_manager\oled_sd_file_manager.axf" - 0 Error(s), 19 Warning(s).
+Program Size: Code=26082 RO-data=6442 RW-data=204 ZI-data=16188  
+"oled_sd_file_manager\oled_sd_file_manager.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -93,7 +61,7 @@ Package Vendor: ARM
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:4.3.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

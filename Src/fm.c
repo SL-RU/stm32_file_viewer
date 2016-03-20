@@ -7,6 +7,8 @@ GUI_ListData *fm_flist;
 GUI_ListItemData **fm_curfiles;
 char file_buff[100];
 
+uint8_t *img_buf;
+
 void fm_init()
 {
 	if (f_mount(&FatFs, "", 1) == FR_OK) {
@@ -65,12 +67,48 @@ uint32_t count_files(char *path)
 	return count;
 }
 
+void fm_draw_img()
+{
+	ssd1306_image(img_buf, 0,0);
+}
+uint8_t fm_input_img(uint8_t key)
+{
+	gui_closeMessage();
+	free(img_buf);
+	return 1;
+}
+
 void fm_handle_file_open(uint16_t id, uint32_t arg, uint8_t act)
 {
-	memset(file_buff, '\0', sizeof(file_buff));
+	char ext[4] = {'\0'};
+	uint16_t i = 0;
 	FIL fil;
-	f_open(&fil, fm_curfiles[id]->text, FA_OPEN_EXISTING | FA_READ);
 	UINT rd = 0;
+	while(fm_curfiles[id]->text[i] != '\0')
+	{
+		ext[0] = ext[1];
+		ext[1] = ext[2];
+		ext[2] = fm_curfiles[id]->text[i];
+		i++;
+	}
+	printf("Ext: %s\n", ext);
+	if(strcmp(ext, "img") == 0)
+	{
+		printf("image\n");
+		uint8_t sz[2];
+		f_open(&fil, fm_curfiles[id]->text, FA_OPEN_EXISTING | FA_READ);
+		f_read(&fil, sz, 2, &rd);
+		if(rd != 2)
+			return;
+		img_buf = malloc((sz[0]*sz[1] + 2)*sizeof(uint8_t));
+		f_read(&fil, img_buf + 2, sz[1]*sz[0], &rd);
+		img_buf[0] = sz[0];
+		img_buf[1] = sz[1];
+		gui_showCustomMessage(&fm_draw_img, &fm_input_img);
+		return;
+	}
+	memset(file_buff, '\0', sizeof(file_buff));
+	f_open(&fil, fm_curfiles[id]->text, FA_OPEN_EXISTING | FA_READ);
 	f_read(&fil, file_buff, 99, &rd); 
 	gui_showMessage(file_buff);
 	f_close(&fil);
