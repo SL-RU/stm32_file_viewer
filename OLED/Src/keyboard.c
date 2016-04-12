@@ -31,22 +31,23 @@ void keyboard_init()
 
 void keyboard_update()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(keyboard_on, GPIO_PIN_SET);
 	HAL_ADC_Start_DMA(&keyboard_hadc, (uint32_t*)keyboard_ADC_values , 2);
 	int8_t cul = keyboard_adc_to_lvl(keyboard_ADC_values[0]),
-		cur = keyboard_adc_to_lvl(keyboard_ADC_values[1]);
+		cur = keyboard_adc_to_lvl(keyboard_ADC_values[1]), 
+		kll = keyboard_lastLeftLvl, klr = keyboard_lastRightLvl;
 	
-	if(keyboard_lastLeftLvl == -1 && keyboard_lastRightLvl == -1 &&
+	keyboard_lastLeftLvl = cul;
+	keyboard_lastRightLvl = cur;
+	HAL_GPIO_WritePin(keyboard_on, GPIO_PIN_RESET);
+	
+	if(kll == -1 && klr == -1 &&
 			(cul >= 0 || cur >= 0))
 	{
 		int8_t cu = keyboard_lvl_to_key(cul, cur);
 		keyboard_handle(cu);
 		keyboard_lastKey = cu;
 	}
-	
-	keyboard_lastLeftLvl = cul;
-	keyboard_lastRightLvl = cur;
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
 }
 
 

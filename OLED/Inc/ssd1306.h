@@ -228,7 +228,7 @@ void SSD1306_DrawFilledCircle(int16_t x0, int16_t y0, int16_t r, uint8_t c);
  * @param  count: how many bytes will be written
  * @retval None
  */
-void ssd1306_image(uint8_t *img, uint8_t x, uint8_t y);
+void ssd1306_image(uint8_t *img, uint8_t frame, uint8_t x, uint8_t y);
 
 #ifndef ssd1306_I2C_TIMEOUT
 #define ssd1306_I2C_TIMEOUT					20000
